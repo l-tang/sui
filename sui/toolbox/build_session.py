@@ -28,7 +28,10 @@ def build_session(data: Union[list, tuple], user_idx: int, item_idx: int, timest
         a list sorted by target dimension with length no greater than k
 
     Examples:
-        >>> log_data = (('user_867as8e', 'v9d8cv8272lk', 1614652639000), ('user_867as8e', 'v8d4ln9834kj', 1614653499000), ('user_868yu82', 'n0s3mn43k4n3', 1614653646000), ('user_868yu82', 'v987d3n5l89n', 1614653702246))
+        >>> log_data = (('user_867as8e', 'v9d8cv8272lk', 1614652639000),
+        ...             ('user_867as8e', 'v8d4ln9834kj', 1614653499000),
+        ...             ('user_868yu82', 'n0s3mn43k4n3', 1614653646000),
+        ...             ('user_868yu82', 'v987d3n5l89n', 1614653702246))
         >>> build_session(data=log_data, user_idx=0, item_idx=1, timestamp_idx=2, session_gap=600000)
         [('user_867as8e', ['v9d8cv8272lk']), ('user_867as8e', ['v8d4ln9834kj']), ('user_868yu82', ['n0s3mn43k4n3', 'v987d3n5l89n'])]
 
