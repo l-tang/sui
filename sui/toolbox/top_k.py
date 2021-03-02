@@ -31,7 +31,6 @@ def top_k(data: Union[list, tuple], k: int, axis: int = 1, target: int = 0, targ
         a list sorted by target dimension with length no greater than k
 
     Examples:
-        >>> from sui.toolbox import top_k
         >>> data = (('Beijing', 8610, 'CN'), ('London', 4420, 'UK'), ('Zhuzhou', 86731, 'CN'), ('Manchester', 44121, 'UK'))
         >>> top_k(data=data, k=3, axis=1, target=0, target_only=False, desc=True)
         [('Zhuzhou', 86731, 'CN'), ('Manchester', 44121, 'UK'), ('Beijing', 8610, 'CN')]
