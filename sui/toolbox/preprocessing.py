@@ -1,7 +1,6 @@
-"""
-    Module for data preprocessing
-    Date: 25/May/2020
-    Author: Li Tang
+"""Module for data preprocessing
+Date: 25/May/2020
+Author: Li Tang
 """
 from __future__ import absolute_import, division, print_function, unicode_literals
 
@@ -20,6 +19,9 @@ class SuiToolboxPreprocessingError(Exception):
 
 
 def month_to_int(month: str, unknown=None) -> int:
+    """
+
+    """
     month_dict = {'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6, 'July': 7, 'August': 8,
                   'September': 9, 'October': 10, 'November': 11, 'December': 12}
 
