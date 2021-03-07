@@ -345,7 +345,6 @@ class DeepWalk:
         callbacks : iterable of :class:`~gensim.models.callbacks.CallbackAny2Vec`, optional
             Sequence of callbacks to be executed at specific stages during training.
 
-
         Returns:
             None
 
