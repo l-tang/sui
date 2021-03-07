@@ -429,3 +429,15 @@ class DeepWalk:
                 return list(self.model[nodes]) if return_type == 'list' else {nodes: list(self.model[nodes])}
             except KeyError as keyerr:
                 raise SuiDeepWalkError(keyerr)
+
+    def nearest_k(self, nodes_list: Union[list, tuple], k: int = 30, negative: Union[list, tuple] = None,
+                  restrict_vocab=None, indexer=None) -> List[tuple]:
+        """Function to return top k nearest neighbours for every node in the input nodes_list.
+
+        """
+        result = []
+        for node in nodes_list:
+            result.append(
+                self.model.wv.most_similar(positive=node, negative=negative, topn=k, restrict_vocab=restrict_vocab,
+                                           indexer=indexer))
+        return result
