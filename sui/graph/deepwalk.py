@@ -430,14 +430,19 @@ class DeepWalk:
             except KeyError as keyerr:
                 raise SuiDeepWalkError(keyerr)
 
-    def nearest_k(self, nodes_list: Union[list, tuple], k: int = 30, negative: Union[list, tuple] = None,
-                  restrict_vocab=None, indexer=None) -> List[tuple]:
+    def nearest_k(self, nodes_list: Union[list, tuple] = None, k: int = 30, negative: Union[list, tuple] = None,
+                  restrict_vocab=None, indexer=None) -> dict:
         """Function to return top k nearest neighbours for every node in the input nodes_list.
 
         """
-        result = []
+        if nodes_list is None:
+            if len(self.G.nodes) == 0:
+                raise ValueError("Parameter 'nodes_list' cannot be None if the length of G.nodes is 0.")
+
+            nodes_list = self.G.nodes
+        
+        result = {}
         for node in nodes_list:
-            result.append(
-                self.model.wv.most_similar(positive=node, negative=negative, topn=k, restrict_vocab=restrict_vocab,
-                                           indexer=indexer))
+            result.setdefault(node, self.model.wv.most_similar(positive=node, negative=negative, topn=k,
+                                                               restrict_vocab=restrict_vocab, indexer=indexer))
         return result
