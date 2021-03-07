@@ -1,6 +1,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 from .ml import FunkSVD, BiasSVD, SVDpp, BPR, ALS
 from .dl import AFM, PNN
+from .graph import DeepWalk
 
 __author__ = ['Li Tang']
 __copyright__ = 'Li Tang'
@@ -21,7 +22,9 @@ __api_info_dict = {
     "sui.GRU4Rec": "GRU4Rec",
     "sui.PNN": "Product-based Neural Networks",
     "sui.SVDpp": "SVD++",
-    "sui.toolbox.top_k": "Return a list containing top k data for a specific dimension"
+    "sui.DeepWalk": "A deepwalk model to embed nodes vectors from a given graph",
+    "sui.toolbox.top_k": "Return a list containing top k data for a specific dimension",
+    "sui.toolbox.random_walk": "Generate a list including walking paths based on random walk in the input graph"
 }
 
 
