@@ -8,3 +8,5 @@ setuptools~=46.0.0
 absl-py~=0.10
 six~=1.15.0
 wrapt==1.11.*
+gensim~=3.8.3
+networkx~=2.3
