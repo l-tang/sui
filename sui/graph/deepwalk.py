@@ -440,7 +440,7 @@ class DeepWalk:
                 raise ValueError("Parameter 'nodes_list' cannot be None if the length of G.nodes is 0.")
 
             nodes_list = self.G.nodes
-        
+
         result = {}
         for node in nodes_list:
             result.setdefault(node, self.model.wv.most_similar(positive=node, negative=negative, topn=k,
