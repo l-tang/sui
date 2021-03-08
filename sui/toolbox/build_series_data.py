@@ -15,7 +15,7 @@ __email__ = 'litang1025@gmail.com'
 __status__ = 'Production'
 
 
-def build_session(data: Union[list, tuple], user_idx: int, item_idx: int, timestamp_idx: int, session_gap: int):
+def build_session(data: Union[list, tuple], user_idx: Union[int, None], item_idx: int, timestamp_idx: int, session_gap: int):
     """Function to split data into multiple sessions
 
     Args:
