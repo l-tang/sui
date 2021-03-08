@@ -20,7 +20,7 @@ def build_session(data: Union[list, tuple], user_idx: int, item_idx: int, timest
 
     Args:
         data: user's log data sorted input data consists of lists or tuples, including user id, item id, and timestamp
-        user_idx: index of the user id in each user's log data
+        user_idx: index of the user id in each user's log data; set user_idx to None can build session without user id
         item_idx: index of the item id in each user's log data
         timestamp_idx: index of the timestamp in each user's log data
         session_gap: the threshold to split user's activities into multiple sessions based the gap of adjacent timestamps
@@ -35,29 +35,56 @@ def build_session(data: Union[list, tuple], user_idx: int, item_idx: int, timest
         ...             ('user_868yu82', 'v987d3n5l89n', 1614653702246))
         >>> build_session(data=log_data, user_idx=0, item_idx=1, timestamp_idx=2, session_gap=600000)
         [('user_867as8e', ['v9d8cv8272lk']), ('user_867as8e', ['v8d4ln9834kj']), ('user_868yu82', ['n0s3mn43k4n3', 'v987d3n5l89n'])]
+        >>> log_data = (('v9d8cv8272lk', 1614652639000),
+        ...             ('v8d4ln9834kj', 1614653499000),
+        ...             ('n0s3mn43k4n3', 1614653646000),
+        ...             ('v987d3n5l89n', 1614653702246))
+        >>> build_session(data=log_data, user_idx=None, item_idx=0, timestamp_idx=1, session_gap=100000)
+        [['v9d8cv8272lk'], ['v8d4ln9834kj'], ['n0s3mn43k4n3', 'v987d3n5l89n']]
 
     """
     is_first_log = True
     result = []
-    user_id = ''
     current_ts = 0
     session = []
-    for log in data:
-        if is_first_log:
-            user_id = log[user_idx]
-            current_ts = log[timestamp_idx]
-            is_first_log = False
 
-        if user_id == log[user_idx] and log[timestamp_idx] - current_ts <= session_gap:
-            session.append(log[item_idx])
-        else:
-            result.append((user_id, session))
-            session = [log[item_idx]]
-            user_id = log[user_idx]
-            current_ts = log[timestamp_idx]
-    result.append((user_id, session))
+    # if user id exists
+    if user_idx is not None:
+        user_id = ''
+        for log in data:
+            # if this is the first log
+            if is_first_log:
+                user_id = log[user_idx]
+                current_ts = log[timestamp_idx]
+                is_first_log = False
 
-    return result
+            if user_id == log[user_idx] and log[timestamp_idx] - current_ts <= session_gap:
+                session.append(log[item_idx])
+            else:
+                result.append((user_id, session))
+                session = [log[item_idx]]
+                user_id = log[user_idx]
+                current_ts = log[timestamp_idx]
+        result.append((user_id, session))
+
+        return result
+
+    # else build sessions with no user id
+    else:
+        for log in data:
+            if is_first_log:
+                current_ts = log[timestamp_idx]
+                is_first_log = False
+
+            if log[timestamp_idx] - current_ts <= session_gap:
+                session.append(log[item_idx])
+            else:
+                result.append(session)
+                session = [log[item_idx]]
+                current_ts = log[timestamp_idx]
+        result.append(session)
+
+        return result
 
 
 def random_walk(G, walk_depth: int, walk_path: list) -> list:
